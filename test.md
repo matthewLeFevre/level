@@ -2,7 +2,7 @@
 
 ## Table Of Contents
 
-1. [General Notes](#General-Notes)
+1. [General Notes](#general-notes)
     + Introduction
     + Documentation Format
     + Comment Format
