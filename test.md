@@ -9,12 +9,12 @@
     ..+ Naming Conventions
 
 2. Controllers
-    ..+ Services
-    ..+ Archive
-    ..+ Archive Main
-    ..+ Categories Main
-    ..+ Posts
-    ..+ comments
+..+ Services
+..+ Archive
+..+ Archive Main
+..+ Categories Main
+..+ Posts
+..+ comments
 
 3. HTML
 
