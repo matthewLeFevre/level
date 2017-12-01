@@ -3,23 +3,23 @@
 ## Table Of Contents
 
 1. [General Notes](#General-Notes)
-    ..+ Introduction
-    ..+ Documentation Format
-    ..+ Comment Format
-    ..+ Naming Conventions
+    + Introduction
+    + Documentation Format
+    + Comment Format
+    + Naming Conventions
 
 2. Controllers
-  + Services
-  + Archive
-  + Archive Main
-  + Categories Main
-  + Posts
-  + comments
+    + Services
+    + Archive
+    + Archive Main
+    + Categories Main
+    + Posts
+    + comments
 
 3. HTML
 
 
-## (#General-Notes)
+## General Notes
 
 ### Introduction
 
