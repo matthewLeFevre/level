@@ -39,3 +39,11 @@ The Service Controller is the central hub of all of the controllers, it houses a
 #### Important Notes
 
 1. One key function that the services controller provides is communication between the 'controller_post.js' and the 'controller_comments.js'. When a comment is created the 'controller_posts.js' sends all the info to the 'controller_services.js` which in turn works with the 'controller_comments.js`.
+
+#### Helper Functions
+
+1. `function getQueryString(queryString)`
+    + In case you are not familiar with this function it simply takes information that is passed from other functions through the url. This information always comes in the form of a name value pair. The credit of the function as far as I am concerned goes to *Ian Esky*.
+
+2. `function getPostComments(postId)
+    + This function is called from the `controller_posts.js` and all that the `controller_services.js` does is pass on a specific post Id to the `controller_comments.js` so that all the comments for that post can be rendered in the correct place in the browser.
