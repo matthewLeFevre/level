@@ -38,7 +38,7 @@ The Service Controller is the central hub of all of the controllers, it houses a
 
 #### Important Notes
 
-1. One key function that the services controller provides is communication between the 'controller_post.js' and the 'controller_comments.js'. When a comment is created the 'controller_posts.js' *sends all the info to the* 'controller_services.js` which in turn works with the 'controller_comments.js`.
+1. One key function that the services controller provides is communication between the 'controller_post.js' and the `controller_comments.js`. When a comment is created the `controller_posts.js` *sends all the info to the* `controller_services.js` which in turn works with the `controller_comments.js`.
 
 #### Helper Functions
 
