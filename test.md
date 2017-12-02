@@ -4,7 +4,7 @@
 
 1. [Introduction](#introduction)
     + [Comment Format](#comment-format)
-    + [Naming Convention](#naming-convention)
+    + [Nameing Convention](#nameing-convention)
 
 2. [Controllers](#controllers)
     + [Services](#services-controller)
@@ -23,11 +23,11 @@
 
 Well hello, congratulations! You have successfully made it to the documentation. I am guessing you tried your hand at decifering the code that the intern created oh... I don't know how long ago now. Well this is that interns last attempt to clarify that code and hopefully help you out. It is also somehting of a self written eulegy because it was that interns last project in his internship... If that dosen't bring tears to your eyes the spelling and gramar errors surly will. That being said help me keep my reputation by correcting spelling and gramar errors as you come accross them. Also if you make a change to the code please update this documentation in the appropriate place. Thanks!
 
-### Comment Format
+### Comment Format -
 
 Everyone comments differently here are a few tips as to how I have commented in the code.
 
-**JavaScript**
+**JavaScript:**
 ```javascript
 //========================================
 // Function or collection of related functions
@@ -36,11 +36,29 @@ Everyone comments differently here are a few tips as to how I have commented in 
 
 And thats about it for comments.
 
-## Naming convention
+## Nameing convention -
+**Note:** Nameing Conventions are not yet applied in all files.
 
-## Controllers
+Conservatively speaking the functions that are not prefixed with an initial are global functions. I will do my best to list the controllers that do not follow this convention.
 
-### Services Controller
+### Prefix Initial Meaning
+**Note:** If the function or variable is prefixed it is related to said controller or webpart.
+
+1. `pM`: `post_main.html` & `archive_main_posts.js`
+2. `rP`: `recent_post.html` & `controller_recent.js`
+3. `sT`: `post_main.html` & `controller_posts.js`
+4. `hM`: `home_main.html` & `controller_home.js`
+5. `cN`: `controller_comments.js`
+6. `cT`: `controller_categories.js`
+7. `pC`: `posts_by_category.html` & `controller_categories_main.js`
+8. `cM`: `categories_main.html` & `controller_categories_main.js`
+9. `aR`: `archive_wp.html` & `controller_archive.js`
+
+
+
+## Controllers -
+
+### Services Controller -
 `controller_services.js`
 
 The Service Controller is the central hub of all of the controllers, it houses a collection of global variables ( not all of them.. if you can put all the global variables here that would be nice they are normally at the top of each file and rarely inbetween functions), as well as a plethora of commonly used functions. More functions could and should probably be added to this controller.
