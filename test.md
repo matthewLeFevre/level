@@ -2,9 +2,7 @@
 
 ## Table Of Contents
 
-1. [General Notes](#general-notes)
-    + [Introduction](#introduction)
-    + [Documentation Format](#documentation)
+1. [Introduction](#introduction)
     + [Comment Format](#comment-format)
     + [Naming Convention](#naming-convention)
 
@@ -21,14 +19,22 @@
 
 3. [HTML]
 
+## Introduction
 
-## General Notes
-
-### Introduction
-
-### Documentation
+Well hello, congratulations! You have successfully made it to the documentation. I am guessing you tried your hand at decifering the code that the intern created oh... I don't know how long ago now. Well this is that interns last attempt to clarify that code and hopefully help you out. It is also somehting of a self written eulegy because it was that interns last project in his internship... If that dosen't bring tears to your eyes the spelling and gramar errors surly will. That being said help me keep my reputation by correcting spelling and gramar errors as you come accross them. Also if you make a change to the code please update this documentation in the appropriate place. Thanks!
 
 ### Comment Format
+
+Everyone comments differently here are a few tips as to how I have commented in the code.
+
+**JavaScript**
+```javascript
+//========================================
+// Function or collection of related functions
+//========================================
+```
+
+And thats about it for comments.
 
 ## Naming convention
 
@@ -89,7 +95,7 @@ function apiInteract (url, method, headers, callback, errorCallBack = false, bod
 1. `function getQueryString(queryString)`
     + In case you are not familiar with this function it simply takes information that is passed from other functions through the url. This information always comes in the form of a name value pair. The credit of the function as far as I am concerned goes to *Ian Esky*.
 
-2. `function getPostComments(postId)
+2. `function getPostComments(postId)`
     + This function is called from the `controller_posts.js` and all that the `controller_services.js` does is pass on a specific post Id to the `controller_comments.js` so that all the comments for that post can be rendered in the correct place in the browser.
 
 3. `function convertSPDate(d)`
