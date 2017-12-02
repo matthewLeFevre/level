@@ -23,7 +23,7 @@
 
 Well hello, congratulations! You have successfully made it to the documentation. I am guessing you tried your hand at decifering the code that the intern created oh... I don't know how long ago now. Well this is that interns last attempt to clarify that code and hopefully help you out. It is also somehting of a self written eulegy because it was that interns last project in his internship... If that dosen't bring tears to your eyes the spelling and gramar errors surly will. That being said help me keep my reputation by correcting spelling and gramar errors as you come accross them. Also if you make a change to the code please update this documentation in the appropriate place. Thanks!
 
-### Comment Format -
+### Comment Format
 
 Everyone comments differently here are a few tips as to how I have commented in the code.
 
@@ -36,7 +36,7 @@ Everyone comments differently here are a few tips as to how I have commented in 
 
 And thats about it for comments.
 
-## Nameing convention -
+## Nameing convention
 **Note:** Nameing Conventions are not yet applied in all files.
 
 Conservatively speaking the functions that are not prefixed with an initial are global functions. I will do my best to list the controllers that do not follow this convention.
@@ -56,9 +56,9 @@ Conservatively speaking the functions that are not prefixed with an initial are 
 
 
 
-## Controllers -
+## Controllers
 
-### Services Controller -
+### Services Controller
 `controller_services.js`
 
 The Service Controller is the central hub of all of the controllers, it houses a collection of global variables ( not all of them.. if you can put all the global variables here that would be nice they are normally at the top of each file and rarely inbetween functions), as well as a plethora of commonly used functions. More functions could and should probably be added to this controller.
