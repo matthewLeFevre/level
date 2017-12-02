@@ -1,8 +1,9 @@
-# FHD Blog Documentation -docs-
+# FHD Blog Documentation
 
 ## Table Of Contents
 
 1. [Introduction](#introduction)
+    + [code](#code)
     + [Comment Format](#comment-format)
     + [Nameing Convention](#nameing-convention)
 
@@ -17,11 +18,25 @@
     + [Posts]
     + [comments]
 
-3. [HTML]
-
 ## Introduction
 
 Well hello, congratulations! You have successfully made it to the documentation. I am guessing you tried your hand at decifering the code that the intern created oh... I don't know how long ago now. Well this is that interns last attempt to clarify that code and hopefully help you out. It is also somehting of a self written eulegy because it was that interns last project in his internship... If that dosen't bring tears to your eyes the spelling and gramar errors surly will. That being said help me keep my reputation by correcting spelling and gramar errors as you come accross them. Also if you make a change to the code please update this documentation in the appropriate place. Thanks!
+
+### Code
+
+#### HTML
+
+Do to the nature of the project HTML needs to be tailored to ever project and mostly be dynamically created by JavaScript
+
+#### CSS
+
+CSS is totally dependent on the Project. Use CSS at your own risk. The CSS I have created was concieved for FHD blog subsites.
+
+#### JavaScript
+
+JavaScript is the most reusable. Please be sure to look over the dynamcally created html to be sure that it is creating the structure that you want as well as adding the correct css classes.
+
++ **JQuery** has also been used for some things like the AJAX requests to the sharepoint API as well as some DOM traversal. As I was building the project I tried my best to drift away from the projects dependency on JQuery due to the fact that JQuery has mostly lost its steam in the industry.
 
 ### Comment Format
 
@@ -108,6 +123,9 @@ function apiInteract (url, method, headers, callback, errorCallBack = false, bod
 }
 ```
 
+2. `function createComment(postId, commentbody)`
+    + And this function we witness the heavey lifting of the SharePoint rest api as it goes off to create a new comment for our post. This function is only called from the `controller_post.js` controller.
+
 #### SC Helper Functions
 
 1. `function getQueryString(queryString)`
@@ -121,4 +139,10 @@ function apiInteract (url, method, headers, callback, errorCallBack = false, bod
     1. `function readable(jsDate)`
         + `readable()` is function that does not do what it was originally created to do which was to take the date parse it and deliver a beautiful string that could be rendered next to a comment or post. Much of that is now accomplished by its parent function `convertSPDate()`. I use it to create a new date object and get the day of the week that the date uses. All of this can be done in the parent.
 
-4. 
+4. `function processSPPost(body)`
+    + **Note:** This function also has a large duplicate that will make the thumbnails larger... It is mostly css manipulation.
+    + This function splits up the body of a post created by out of the box sharepoint. All it does is seperate the `<iframe>` from the `<p>` tags we also are adding in a css class to bend the `<iframe>` to our will. This can also be easily retrofitted to also work with images or anything else that the blog may contain. All you have to do is take a look at the html output of the post and be handing with string manipulation in js.
+
+5. `function createPostThumbnailMarkup`
+    + **Note:** This function also has a large duplicate that will make the thumbnails larger... It is mostly css manipulation.
+    +This function does the heavy lifting by creating dynamic html for blog post thumbnails. Feel free to use any of it just bare in mind it was created specifically for FHD blogs. 
