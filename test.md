@@ -10,6 +10,9 @@
 
 2. [Controllers](#controllers)
     + [Services](#services-controller)
+        1. [SC Important Notes](#sc-important-notes)
+        2. [SC Core Functions](#sc-core-functions)
+        3. [SC Helper Functions](#sc-core-functions)
     + [Archive]
     + [Archive Main]
     + [Categories Main]
@@ -36,14 +39,62 @@
 
 The Service Controller is the central hub of all of the controllers, it houses a collection of global variables ( not all of them.. if you can put all the global variables here that would be nice they are normally at the top of each file and rarely inbetween functions), as well as a plethora of commonly used functions. More functions could and should probably be added to this controller.
 
-#### Important Notes
+#### SC Important Notes
 
-1. One key function that the services controller provides is communication between the 'controller_post.js' and the `controller_comments.js`. When a comment is created the `controller_posts.js` *sends all the info to the* `controller_services.js` which in turn works with the `controller_comments.js`.
+1. One key function that the services controller provides is communication between the 'controller_post.js' and the `controller_comments.js`. When a comment is created the `controller_posts.js` sends all the info to the `controller_services.js` which in turn works with the `controller_comments.js`.
 
-#### Helper Functions
+#### SC Core Functions
+
+1. `function apiInteract(url, mehtod, headers, success, error, body)`
+    + In an effort to further simplify JQuerys' already simple Ajax library I have wrapped the JQuery Ajax function in another function that requires only parameters that we need for this blog.
+        + **Important to note:** the `body` parameter is in reality not the body of the request but the data payload. If this is confusing to you I will bring up the function down below. As you can see the body is being sent to the data property of the Ajax request. The reason it is how it is is because I started with body and upon further research I needed data to actually add comments and likes to posts. 
+
+```javascript
+function apiInteract (url, method, headers, callback, errorCallBack = false, body = "") {
+
+       $.ajax({
+    url: url,
+    
+    method: method,
+    
+    data: JSON.stringify(body),
+    //data: body,
+    
+    headers: headers,
+    
+    success: function(result) {
+      
+      if (callback) {
+        callback(result);
+      } else {
+        console.log(result);
+        console.log("success");
+      }
+      
+    },
+    
+    error: function(err) {
+      if (errorCallBack) {
+        errorCallBack(err);
+      } else {
+        console.log(err);
+      }
+    }
+  });
+}
+```
+
+#### SC Helper Functions
 
 1. `function getQueryString(queryString)`
     + In case you are not familiar with this function it simply takes information that is passed from other functions through the url. This information always comes in the form of a name value pair. The credit of the function as far as I am concerned goes to *Ian Esky*.
 
 2. `function getPostComments(postId)
     + This function is called from the `controller_posts.js` and all that the `controller_services.js` does is pass on a specific post Id to the `controller_comments.js` so that all the comments for that post can be rendered in the correct place in the browser.
+
+3. `function convertSPDate(d)`
+    + This functions author is Ben Tedder (www.bentedder.com) I have however significantly modified it to work in the way we need it too. It could however use some work. In side of it I have to do some weird things to get the actual day of the week and so forth. **If you have a better way of writing this or you can improve it please do**. This function is used for all of the dates so it is very commonly used.
+    1. `function readable(jsDate)`
+        + `readable()` is function that does not do what it was originally created to do which was to take the date parse it and deliver a beautiful string that could be rendered next to a comment or post. Much of that is now accomplished by its parent function `convertSPDate()`. I use it to create a new date object and get the day of the week that the date uses. All of this can be done in the parent.
+
+4. 
