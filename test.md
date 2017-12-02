@@ -11,12 +11,17 @@
     + [Services](#services-controller)
         1. [SC Important Notes](#sc-important-notes)
         2. [SC Core Functions](#sc-core-functions)
-        3. [SC Helper Functions](#sc-core-functions)
-    + [Archive]
-    + [Archive Main]
-    + [Categories Main]
-    + [Posts]
-    + [comments]
+        3. [SC Helper Functions](#sc-helper-functions)
+    + [Archive](#archive)
+    + [Archive Main Post](#archive-main-post)
+    + [Archive Main](#archive-main)
+    + [Categories Main](#categories-main)
+    + [Categories](#categories)
+    + [comments](#comments)
+    + [Home](#home)
+    + [Posts](#posts)
+    + [Recent](#recent)
+
 
 ## Introduction
 
@@ -26,11 +31,11 @@ Well hello, congratulations! You have successfully made it to the documentation.
 
 #### HTML
 
-Do to the nature of the project HTML needs to be tailored to ever project and mostly be dynamically created by JavaScript
+Due to the nature of the project HTML needs to be tailored to every project and mostly be dynamically created by JavaScript
 
 #### CSS
 
-CSS is totally dependent on the Project. Use CSS at your own risk. The CSS I have created was concieved for FHD blog subsites.
+CSS is totally dependent on the Project. Use CSS at your own risk. The CSS I have created was concieved for FHD blog subsites and their associated branding.
 
 #### JavaScript
 
@@ -146,3 +151,41 @@ function apiInteract (url, method, headers, callback, errorCallBack = false, bod
 5. `function createPostThumbnailMarkup`
     + **Note:** This function also has a large duplicate that will make the thumbnails larger... It is mostly css manipulation.
     +This function does the heavy lifting by creating dynamic html for blog post thumbnails. Feel free to use any of it just bare in mind it was created specifically for FHD blogs. 
+
+
+### Archive
+`controller_archive.js`
+
+This is one of the smaller controllers that handles the `archives_wp` webpart. 
+
+#### Functions
+
+1. `function aR_calcArchiveData()`
+    + We start things off in this controller by finding out what the current date is and based on that date getting the last five months. We will use these months to populate a list of links to all of the posts associated with said month. 
+
+2. `function aR_processArchiveData(months, c_date)`
+    + Here we are looping through each month and useing those months to create archive objects that to create a link that we will render to the user. 
+
+3. `function aR_buildArchiveQuery(month, c_date)`
+    +
+
+4. `function aR_renderArchiveData(aR_objs)`
+    +
+
+### Archive Main Post
+`archive_main_post.js`
+
+### Archive Main
+`controller_archive_main.js`
+### Categories Main
+`controller_categories_main.js`
+### Categories 
+`controller_categories.js`
+### Comments
+`controller_comments.js`
+### Home
+`controller_home.js`
+### Posts
+`controller_posts.js`
+### Recent
+`controller_recent.js`
