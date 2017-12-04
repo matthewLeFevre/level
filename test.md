@@ -3,7 +3,7 @@
 ## Table Of Contents
 
 1. [Introduction](#introduction)
-    + [code](#code)
+    + [Code](#code)
     + [Comment Format](#comment-format)
     + [Nameing Convention](#nameing-convention)
 
@@ -13,8 +13,11 @@
         2. [SC Core Functions](#sc-core-functions)
         3. [SC Helper Functions](#sc-helper-functions)
     + [Archive](#archive)
+        1. [AC Functions](#ac-funcitons)
     + [Archive Main Post](#archive-main-post)
+        1. [AMP Functions](#amp-functions)
     + [Archive Main](#archive-main)
+        1. [ACM Functions](#acm-functions)
     + [Categories Main](#categories-main)
     + [Categories](#categories)
     + [comments](#comments)
@@ -147,8 +150,9 @@ function apiInteract (url, method, headers, callback, errorCallBack = false, bod
 4. `function processSPPost(body)`
     + **Note:** This function also has a large duplicate that will make the thumbnails larger... It is mostly css manipulation.
     + This function splits up the body of a post created by out of the box sharepoint. All it does is seperate the `<iframe>` from the `<p>` tags we also are adding in a css class to bend the `<iframe>` to our will. This can also be easily retrofitted to also work with images or anything else that the blog may contain. All you have to do is take a look at the html output of the post and be handing with string manipulation in js.
+    + ** Update:** This function has just been recently updated to select the first image found in a body and use that as an iframe.
 
-5. `function createPostThumbnailMarkup`
+5. `function createPostThumbnailMarkup()`
     + **Note:** This function also has a large duplicate that will make the thumbnails larger... It is mostly css manipulation.
     +This function does the heavy lifting by creating dynamic html for blog post thumbnails. Feel free to use any of it just bare in mind it was created specifically for FHD blogs. 
 
@@ -158,7 +162,7 @@ function apiInteract (url, method, headers, callback, errorCallBack = false, bod
 
 This is one of the smaller controllers that handles the `archives_wp` webpart. 
 
-#### Functions
+#### AC Functions
 
 1. `function aR_calcArchiveData()`
     + We start things off in this controller by finding out what the current date is and based on that date getting the last five months. We will use these months to populate a list of links to all of the posts associated with said month. 
@@ -167,16 +171,41 @@ This is one of the smaller controllers that handles the `archives_wp` webpart.
     + Here we are looping through each month and useing those months to create archive objects that to create a link that we will render to the user. 
 
 3. `function aR_buildArchiveQuery(month, c_date)`
-    +
+    + This is a very long winded function and can most likely be boken out and put into another function.  What it does is take a month and another date to find out how many days in the month and also what year it is. This function accounts for leap year up to the year 3000 then whoever still uses this is going to have a problem (I hope some of you found that funny). Towards the end of this function we have to convert the dates that represent the first and last day of said month into ISO dates and slap them in a query to get all posts between two dates.
 
 4. `function aR_renderArchiveData(aR_objs)`
-    +
+    + After collecting data that has been processed in other functions the months rendered in links that will be put into the `archive_wp.htm` webpart.
 
 ### Archive Main Post
 `archive_main_post.js`
 
+After gathering every month associated with a year we are going to get all of the posts for a single month. We then slice and dice the data for each post to render a beautiful thumbnail to the user with links to the individual pages of those posts.
+
+#### AMP Functions
+
+1. `pM_getPostByMonth(startDate, endDate, month)`
+    + Here we are checking if the month that we are looking for is the current month and if it is we are going ot go ahead and change it to an ISO date. I can't really remember why we do that but there is a reason. After that we send a query to the api asking for all of the posts in the month from the start date to the end date.
+
+
+2. `pM_proccessPosts(postObjs)`
+    + Once we grab all of the posts in a specific date we are going to slice and dice the data and put it into pretty thumbnails thanks to the help form several functions in the `controller_services.js`. We finish this controller up by rendering the data to the DOM.
+
 ### Archive Main
 `controller_archive_main.js`
+
+The object of this controller is to supply the archive page with all the months and years associated with the blog. 
+
+#### ACM Functions 
+
+1. `aM_getAllMonths(firstPost)`
+    + Right off the bat we are sending an api call that calls back on success to this function. The api call gets the very first post in the blog and first thing we will do with it is do some parsing of the data. We are looking to find the first stating date of the blog and the ending date. In most cases the the blog has not ended so we are actually useing the current date as the end date. (**Note:** One thing that can be improved upon here is the fact that we grab every month even though there may not be a post stored for that month. If we could filter the data after we get it to find out what months we need with out looking at all of the posts that would be awesome).
+
+2. `aM_findMonths(startDate, endDate)`
+    + After getting all of the associated months we are going to use a ton of logic to send years and their months to an array of years. There are a variety of loops and logic associated with this function. It is quite exstensive. Sorry about that.
+
+3. `aM_proccessAllMonths(years)`
+    + Here we are taking the array that we created and formating it to look presentable. 
+
 ### Categories Main
 `controller_categories_main.js`
 ### Categories 
