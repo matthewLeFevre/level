@@ -19,11 +19,17 @@
     + [Archive Main](#archive-main)
         1. [ACM Functions](#acm-functions)
     + [Categories Main](#categories-main)
+        1. [CM Functions](#cm-funcitons)
     + [Categories](#categories)
+        1. [CT Functions](#ct-functions)
     + [comments](#comments)
+        1. [COM Functions](#com-functions)
     + [Home](#home)
+        1. [Home Functions](#home-functions)
     + [Posts](#posts)
+        1. [Post Functions](#post-functions)
     + [Recent](#recent)
+        1. [Recent Functions](#recent-functions)
 
 
 ## Introduction
@@ -132,7 +138,7 @@ function apiInteract (url, method, headers, callback, errorCallBack = false, bod
 ```
 
 2. `function createComment(postId, commentbody)`
-    + And this function we witness the heavey lifting of the SharePoint rest api as it goes off to create a new comment for our post. This function is only called from the `controller_post.js` controller.
+    + And this function we witness the heavey lifting of the SharePoint rest api as it goes off to create a new comment for our post. This function is only called from the `controller_comments.js` controller.
 
 #### SC Helper Functions
 
@@ -183,11 +189,11 @@ After gathering every month associated with a year we are going to get all of th
 
 #### AMP Functions
 
-1. `pM_getPostByMonth(startDate, endDate, month)`
+1. `function pM_getPostByMonth(startDate, endDate, month)`
     + Here we are checking if the month that we are looking for is the current month and if it is we are going ot go ahead and change it to an ISO date. I can't really remember why we do that but there is a reason. After that we send a query to the api asking for all of the posts in the month from the start date to the end date.
 
 
-2. `pM_proccessPosts(postObjs)`
+2. `function pM_proccessPosts(postObjs)`
     + Once we grab all of the posts in a specific date we are going to slice and dice the data and put it into pretty thumbnails thanks to the help form several functions in the `controller_services.js`. We finish this controller up by rendering the data to the DOM.
 
 ### Archive Main
@@ -197,10 +203,10 @@ The object of this controller is to supply the archive page with all the months 
 
 #### ACM Functions 
 
-1. `aM_getAllMonths(firstPost)`
+1. `function aM_getAllMonths(firstPost)`
     + Right off the bat we are sending an api call that calls back on success to this function. The api call gets the very first post in the blog and first thing we will do with it is do some parsing of the data. We are looking to find the first stating date of the blog and the ending date. In most cases the the blog has not ended so we are actually useing the current date as the end date. (**Note:** One thing that can be improved upon here is the fact that we grab every month even though there may not be a post stored for that month. If we could filter the data after we get it to find out what months we need with out looking at all of the posts that would be awesome).
 
-2. `aM_findMonths(startDate, endDate)`
+2. `function aM_findMonths(startDate, endDate)`
     + After getting all of the associated months we are going to use a ton of logic to send years and their months to an array of years. There are a variety of loops and logic associated with this function. It is quite exstensive. Sorry about that.
 
 3. `aM_proccessAllMonths(years)`
@@ -208,13 +214,78 @@ The object of this controller is to supply the archive page with all the months 
 
 ### Categories Main
 `controller_categories_main.js`
+
+Much like the `controller_archive_main.js` we are organizing all of the categories on the site and building markup links for the posts associated with them. This controller is a little bit of a bone yard... sorry for all the comments and confusing code. Will do my best to explain.
+
+#### CM Functions
+
+1. `function cM_getCategoryTitles()`
+    + Here we are getting all cutting edge with a jQuery promise. To be honest it isn't all that impressive. Bassically instead of useing a callback like we have in everyother function in this program we use a promise that on completion of the promise will send all of the category data to our next function. By now apiInteract should be familiar if you have questions about it check out **SC Core Functions** above.
+
+2. `function cM_processCatTitles(categories)`
+    + Taking the category data collected by the rest call in the previous function we we are collecting both the category titl and category id to form a category pair that we will then push to a global array that will have one of these pairs for each category. Originally we were going to grab the three most recent posts per category but then decided against it because it would require a little bit too mucha nd was not needed. That being said the rest request in this function and the next function `cM_renderCatPosts()` are now totallly irrelevant.
+
+2. **Note: Chopping Block, do not use!** `cM_renderCatPosts()`
+    + Relying on some global variables here we build out and render the html needed to display each post related to the selected category Item. Check for more comments related to this function in the code.
+
+3. `function pC_getPostByCategory(catId, catTitle)`
+    + Even though the name of this function is pretty self explanatory for more information consult the in code comments. 
+
+4. `function pC_processPosts(postObjs)`
+    + Here we are working on creating the markup for the `posts_by_category.html` webpart. That means that our code is taking all of the related posts fromt he rest request and processing them so that they look like stylish thumbnails on the page.
+
 ### Categories 
 `controller_categories.js`
+
+This controller preforms two simple tasks for the categories webpart. First, get the data for each category from the api. Second, dynamically create html that wrap around the data that the api supplied and render links to the browser.
+
+#### CT Functions
+
+1. `function cT_getCategoryData(url)`
+    + Sends a rest request to the SharePoint API to retrieve all categories that exist on the site.
+
+2. `function cT_renderCategoryData(catObjs)`
+    + here we take the objects taht were returned to us from the api. We loop through them and create a dynamic html wrapper around them that allows them to become clickable links. Then we concatenate them to the string that is inserted inside of an html container on the page.
+
 ### Comments
 `controller_comments.js`
+
+The inate quality of this controller is that it is only interacted with and does not interact initialy with anything. Comments are allways collected by the `controller_services.js` to pass onto the `controller_posts.js`. 
+
+#### COM Functions
+
+1. `function cN_getSinglePostcomments(postid)`
+    + Once this function is given a post id it will use the sharepoint api to retrieve the all necissary data from the API. It then calls back to the next function for processing.
+
+2. `function processComments(cmtObjs)`
+    + here we loop through each comment use a few external function calls to bake our data into beautifully formated comments. Then we render them in the DOM.
+
+3. `function populatecomments(name, title, body, date, imgPath, delveLink)`
+    + Now that we have all the data we need all that is left is to put each piece into the right place. **Note:** keep in mind to that the blog you are creating may not have the same formatting as FHD Daily Connect. That is why I sugest you change the markup and add CSS classes that you have created.
+
+4. `function postCommentToBlog()`
+    + First we grabe everything inside of the textarea for our comment. Then we send it on to the next lucky function in the `controller_services.js`.
+    
 ### Home
 `controller_home.js`
+
+Much like many of the other controllers what we accomplish here is simply pulling data from the API and rendering it how we want to.
+
+#### Home Functions
+
+1. `function hM_getPostData(url)`
+    + Based on what day it is we will get the top 3 most recent posts from the api and send them on to be rendered.
+
+2. `function hM_renderPostData(postobjs)`
+    + Here we are getting the data we need about each post that we will be using. We are then processing that data so that it will render how we want it to to the user and then we render it on the page.
+
 ### Posts
 `controller_posts.js`
+
+#### Post Functions
+
+
 ### Recent
 `controller_recent.js`
+
+#### Recent Functions
