@@ -151,7 +151,7 @@ function apiInteract (url, method, headers, callback, errorCallBack = false, bod
 3. `function convertSPDate(d)`
     + This functions author is Ben Tedder (www.bentedder.com) I have however significantly modified it to work in the way we need it too. It could however use some work. In side of it I have to do some weird things to get the actual day of the week and so forth. **If you have a better way of writing this or you can improve it please do**. This function is used for all of the dates so it is very commonly used.
     1. `function readable(jsDate)`
-        + `readable()` is function that does not do what it was originally created to do which was to take the date parse it and deliver a beautiful string that could be rendered next to a comment or post. Much of that is now accomplished by its parent function `convertSPDate()`. I use it to create a new date object and get the day of the week that the date uses. All of this can be done in the parent.
+        + `readable()` is a function that does not do what it was originally created to do which was to take the date parse it and deliver a beautiful string that could be rendered next to a comment or post. Much of that is now accomplished by its parent function `convertSPDate()`. I use it to create a new date object and get the day of the week that the date uses. All of this can be done in the parent.
 
 4. `function processSPPost(body)`
     + **Note:** This function also has a large duplicate that will make the thumbnails larger... It is mostly css manipulation.
@@ -282,10 +282,29 @@ Much like many of the other controllers what we accomplish here is simply pullin
 ### Posts
 `controller_posts.js`
 
+This controller rivals that of the `controller_services.js` in depth and number of functions. It accomplishes a lot but may require a lot of optimizaiton if you are up for it.
+
 #### Post Functions
+
+1. `function sT_getSinglePost(postId)`
+    + At the bottom of the file we notice that we are calling this function and we are delivering it data based on what we find in the url. That being siad here we are looking to get all the data we need from the SharePoint Rest API. Next we are asking the `controller_services.js` for the comments we need that go along with this post.
+
+2. `function processPost(postObject)`
+    + Once we get the postObject we are going to glean everything we need from it and then we are going to call the likes function to listen for likes. After this we are going to process our post and then select the locations we are going to deposit the data. Then we are going to go ahead an plop all the data into the webpart.
+
+3. `function incrementLike(addLikeUrl, checkLikeUrl, numlikes)`
+    + To initialize this function we are going to add a listener to the button watching for a click.
 
 
 ### Recent
 `controller_recent.js`
 
+Similar to other controllers all we need to do is send the request and then formate the returned data.
+
 #### Recent Functions
+
+1. `function rP_getPostData(url)`
+    + First off lets grab the data we need from the api and determine what the current date is in order to grabe the most recent posts.
+
+2. `rP_renderPostData(postObjs)`
+    + Lets take what we need from the data we have recieved from the last function and format it accourdingly.
