@@ -299,7 +299,7 @@ This controller rivals that of the `controller_services.js` in depth and number 
         aImg   = aUrl + "/_layouts/15/userphoto.aspx?accountname=" + aEMail,
         aDelve = "https://nam.delve.office.com/?p=" + aEMail + "&v=work",
         ``` 
-    +Once we get the postObject we are going to glean everything we need from it and then we are going to call the likes function to listen for likes. After this we are going to process our post and then select the locations we are going to deposit the data. Then we are going to go ahead an plop all the data into the webpart.
+    + Once we get the postObject we are going to glean everything we need from it and then we are going to call the likes function to listen for likes. After this we are going to process our post and then select the locations we are going to deposit the data. Then we are going to go ahead an plop all the data into the webpart.
 
 
 3. `function incrementLike(addLikeUrl, checkLikeUrl, numlikes)`
