@@ -287,19 +287,20 @@ This controller rivals that of the `controller_services.js` in depth and number 
 #### Post Functions
 
 1. `function sT_getSinglePost(postId)`
-    + **Arguments:** When a user clicks on a thumnail or link related to a post it sends the Id of the post to the url and then changes to the view that runs this script. Using the query string we pluck the postId from the url and then call the SharePoint Rest API for the data related to this ID in the posts list.
+    + **Arguments:** When a user clicks on a thumbnail or link related to a post it sends the Id of the post to the url and then changes to the view that runs this script. Using the query string we pluck the postId from the url and then call the SharePoint Rest API for the data related to this ID in the posts list.
     + Once we have fired that Rest call we ask the `controller_services.js` for all of the comments from the `controller_comments.js`.
     + At the end of this function we populate two global variables with strings that contain the postId in them. We will use these strings in the `incrementLike` function in this controller.
 
 2. `function processPost(postObject)`
     + **Arguments:** A single object is required for this function to be fired. Most of the data we will use in the web part will come from this object. The object is returned from the SharePoint Rest API when we query it for a post ID.
     + We begin this function by takeing everything we need from the object and sperating the values into individual variables (This may be the long handed way to do it but I keep it for simplicities sake). What is unique about this portion of the function is that we are grabing more than just what is in the object. We are also gathering information for Delve from the Browser about the author. For example 
-```javascript
+        ```javascript
         aUrl   = _spPageContextInfo.webServerRelativeUrl,
         aImg   = aUrl + "/_layouts/15/userphoto.aspx?accountname=" + aEMail,
         aDelve = "https://nam.delve.office.com/?p=" + aEMail + "&v=work",
-```
-    + Once we get the postObject we are going to glean everything we need from it and then we are going to call the likes function to listen for likes. After this we are going to process our post and then select the locations we are going to deposit the data. Then we are going to go ahead an plop all the data into the webpart.
+        ``` 
+    +Once we get the postObject we are going to glean everything we need from it and then we are going to call the likes function to listen for likes. After this we are going to process our post and then select the locations we are going to deposit the data. Then we are going to go ahead an plop all the data into the webpart.
+
 
 3. `function incrementLike(addLikeUrl, checkLikeUrl, numlikes)`
     + **Arguments:** When we call this function we are passing two strings and a integer.The two strings are `addLikeUrl` and  `checkLikeUrl` both of these arguments are global variables that exist in the services controller. However, both strings are populated at the end of `sT_apiUrl`. Both strings are SharePoint API Rest requests that will either add a like to a post or get the number of likes a post has. `numlikes` is an integer value of the number of likes the post has.
