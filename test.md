@@ -287,14 +287,34 @@ This controller rivals that of the `controller_services.js` in depth and number 
 #### Post Functions
 
 1. `function sT_getSinglePost(postId)`
-    + At the bottom of the file we notice that we are calling this function and we are delivering it data based on what we find in the url. That being siad here we are looking to get all the data we need from the SharePoint Rest API. Next we are asking the `controller_services.js` for the comments we need that go along with this post.
+    + **Arguments:** When a user clicks on a thumnail or link related to a post it sends the Id of the post to the url and then changes to the view that runs this script. Using the query string we pluck the postId from the url and then call the SharePoint Rest API for the data related to this ID in the posts list.
+    + Once we have fired that Rest call we ask the `controller_services.js` for all of the comments from the `controller_comments.js`.
+    + At the end of this function we populate two global variables with strings that contain the postId in them. We will use these strings in the `incrementLike` function in this controller.
 
 2. `function processPost(postObject)`
+    + **Arguments:** A single object is required for this function to be fired. Most of the data we will use in the web part will come from this object. The object is returned from the SharePoint Rest API when we query it for a post ID.
+    + We begin this function by takeing everything we need from the object and sperating the values into individual variables (This may be the long handed way to do it but I keep it for simplicities sake). What is unique about this portion of the function is that we are grabing more than just what is in the object. We are also gathering information for Delve from the Browser about the author. For example 
+```javascript
+        aUrl   = _spPageContextInfo.webServerRelativeUrl,
+        aImg   = aUrl + "/_layouts/15/userphoto.aspx?accountname=" + aEMail,
+        aDelve = "https://nam.delve.office.com/?p=" + aEMail + "&v=work",
+```
     + Once we get the postObject we are going to glean everything we need from it and then we are going to call the likes function to listen for likes. After this we are going to process our post and then select the locations we are going to deposit the data. Then we are going to go ahead an plop all the data into the webpart.
 
 3. `function incrementLike(addLikeUrl, checkLikeUrl, numlikes)`
-    + To initialize this function we are going to add a listener to the button watching for a click.
-
+    + **Arguments:** When we call this function we are passing two strings and a integer.The two strings are `addLikeUrl` and  `checkLikeUrl` both of these arguments are global variables that exist in the services controller. However, both strings are populated at the end of `sT_apiUrl`. Both strings are SharePoint API Rest requests that will either add a like to a post or get the number of likes a post has. `numlikes` is an integer value of the number of likes the post has.
+    + `function processIncrement(likevalue)`
+        + This function is used to build to update the new number of likes a post has. It depends one the `likevalue` argument which is calculated before this function is called. 
+    + Next we check whether the user that is logged in viewing the blog post has already liked it or not. If they have already liked it then the "Like" button should be an "Unlike" button and when they click it this function will deduct exactly one like from the total and remove the users id from the posts' `LikedByStringId.results` array.
+    + Upon discovering that the user id is not located inside of the `LikedByStringId.results` array the user will see the "Like" button and when they click the button it will add exactly one to the total number of likes and add the users' id to the `LikedByStringId.results` array.
+    + To finish this off this last snippet of code is finding the location with which to update the like value number so that the user will awknowledge a change when the "like" or "unlike" value is clicked.
+```javascript 
+numLikes[0] = likeValue;
+var likeLocal = document.getElementById("js-post--likes");
+likeLocal.innerHTML =  likeValue;
+```
+4. `function checkLikes()`
+    + Here we are checking whether or not the user has liked this post by looping through the `LikedByStringId.results` array of the current post. If it so happens that thier ID is found then this function will change the "Like" button into an "Unlike" button. This function has no other purpose.
 
 ### Recent
 `controller_recent.js`
